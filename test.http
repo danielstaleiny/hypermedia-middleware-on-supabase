@@ -22,3 +22,12 @@ POST :api/crud
 {
   "name": "Marshall"
 }
+
+
+
+#ping test
+OPTIONS :api/crud
+:header
+{
+  "name": "Marshall"
+}

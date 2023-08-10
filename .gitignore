@@ -109,3 +109,4 @@ supabase/functions/_src/.test.env.ts
 .env.staging
 staging.http
 note.org
+_site/

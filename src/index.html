@@ -1,0 +1,9 @@
+<!doctype html>
+<title>Page title</title>
+<script src="https://unpkg.com/htmx.org@1.9.4" integrity="sha384-zUfuhFKKZCbHTY6aRR46gxiqszMk5tcHjsVFxnUo8VMus4kHGVdIYVbOYYNlKmHV" crossorigin="anonymous"></script>
+<form hx-post="http://localhost:54321/functions/v1/crud" hx-target="#search-results">
+  <input type="text" name="name" placeholder="Enter name"/>
+  <button>run</button>
+</form>
+
+<div id="search-results"></div>

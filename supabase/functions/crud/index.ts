@@ -6,16 +6,11 @@ const main = async (req) => {
   try {
     await healthCheck(req)
     await isOptions(req)
+    const { name } = await getData(req)
+    // TODO probably we need to sanitize the data here ???
+    const data = `<p>Hey there, ${name}</p>`
 
-    const { name } = await req.json()
-    const data = {
-      message: `Hello ${name}!`,
-    }
-
-    return new Response(
-      JSON.stringify(data),
-      { headers: { 'Content-Type': 'application/json' } },
-    )
+    return html(data)
   } catch (err) {
     if (err instanceof Options) {
       return err.http
@@ -32,10 +27,29 @@ const stringify = (obj: any) => JSON.stringify(obj)
 const cors = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Headers':
-    'authorization, x-client-info, apikey, content-type',
+    'authorization, x-client-info, apikey, content-type, hx-current-url, hx-request, hx-target ',
 }
 const headers = {
   headers: { ...cors, 'Content-Type': 'application/json' },
+}
+
+const json = (obj) => {
+  return new Response(
+    obj,
+    { headers: { 'Content-Type': 'application/json' } },
+  )
+}
+
+const html = (obj) => {
+  return new Response(
+    obj,
+    {
+      headers: {
+        'Content-Type': 'text/html; charset=utf-8',
+        'Access-Control-Allow-Origin': '*',
+      },
+    },
+  )
 }
 
 // Usefull, if we want to return early
@@ -60,6 +74,25 @@ class Health extends Error {
   get http() {
     return new Response(stringify({ heal: 'me' }), headers)
   }
+}
+
+const getData = async (req) => {
+  // First we need to figure out what headers do we have set
+  let body = {}
+  if (req.headers.get('content-type').includes('application/json')) {
+    body = await req.json()
+  } else if (
+    req.headers.get('content-type').includes(
+      'application/x-www-form-urlencoded',
+    )
+  ) {
+    const formData = await req.formData()
+    for (const key of formData.keys()) {
+      body[key] = formData.get(key)
+    }
+  }
+  // TODO handle multipart/form-data
+  return body
 }
 
 const isOptions = async (req) => {
