@@ -1,7 +1,9 @@
 <!doctype html>
 <title>Page title</title>
 <script src="https://unpkg.com/htmx.org@1.9.4" integrity="sha384-zUfuhFKKZCbHTY6aRR46gxiqszMk5tcHjsVFxnUo8VMus4kHGVdIYVbOYYNlKmHV" crossorigin="anonymous"></script>
-<form hx-post="http://localhost:54321/functions/v1/crud" hx-target="#search-results">
+<form
+  hx-headers='{"apikey": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS1kZW1vIiwicm9sZSI6ImFub24iLCJleHAiOjE5ODM4MTI5OTZ9.CRXP1A7WOeoJeXxjNni43kdQwgnWNReilDMblYTn_I0","Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS1kZW1vIiwicm9sZSI6ImFub24iLCJleHAiOjE5ODM4MTI5OTZ9.CRXP1A7WOeoJeXxjNni43kdQwgnWNReilDMblYTn_I0", "x-data-resource": "http://supabase_kong_hypermedia-middleware-on-supabase:8000/rest/v1/items?select=*"}'
+  hx-get="http://localhost:54321/functions/v1/crud" hx-target="#search-results">
   <input type="text" name="name" placeholder="Enter name"/>
   <button>run</button>
 </form>

@@ -4,10 +4,12 @@
 :host = localhost:54321
 :appkey = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS1kZW1vIiwicm9sZSI6ImFub24iLCJleHAiOjE5ODM4MTI5OTZ9.CRXP1A7WOeoJeXxjNni43kdQwgnWNReilDMblYTn_I0
 :api = :http://:host/functions/v1
+:rest = :http://:host/rest/v1
 
 :header = <<
 Authorization: Bearer :appkey
 Content-Type: application/json
+apikey: :appkey
 #
 
 
@@ -31,3 +33,9 @@ OPTIONS :api/crud
 {
   "name": "Marshall"
 }
+
+
+
+#ping test
+GET :rest/items?select=*
+:header
